@@ -14,7 +14,7 @@ const Cart = () => {
 
     useEffect(() => {
         if (items.length === 0) dispatch(fetchProduct());
-    }, []); // eslint-disable-line react-hooks/exhaustive-deps
+    }); 
 
     const onRemoveItem = (id) => {
         if (window.confirm('Are you sure you want to delete?')) {

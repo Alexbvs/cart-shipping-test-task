@@ -8,13 +8,19 @@ export const fetchProduct = () => (dispatch) => {
 
   axios
     .get
-    ('https://5f9038fce0559c0016ad647c.mockapi.io/product').then(({ data }) => {
+    ('https://5f9038fce0559c0016ad647c.mockapi.io/product')
+      .then(({ data }) => {
       const itemsData = data.map(item => ({
         ...item,
         selectedCount: 1
       }))
       dispatch(setProduct(itemsData));
-    });
+    })
+
+    //errorHandler
+    // .catch(error => {
+    //   dispatch({type: 'SELECTTED-ERORR', payload: error})
+    // })
 };
 
 export const setProduct = (items) => ({

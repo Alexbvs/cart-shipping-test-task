@@ -7,7 +7,6 @@ let initialState = {
 const getTotalSum = (items) => {
   let totalPrice = 0;
   for (let i = 0; i < items.length; i++) {
-
     totalPrice += (items[i].selectedCount * items[i].price)
   }
   return totalPrice;
@@ -15,8 +14,6 @@ const getTotalSum = (items) => {
 
 const cartReducer = (state = initialState, action) => {
   switch (action.type) {
-
-
     case 'SET_PRODUCT':
       return {
         ...state,
@@ -45,49 +42,64 @@ const cartReducer = (state = initialState, action) => {
     }
 
     case 'PLUS_CART_ITEM': {
-      state.items.map(item => {
+      const itemsClone = state.items.map(item => {
         if (item.id === action.payload && item.selectedCount <= 49) {
-          return item.selectedCount += 1;
+          return {
+            ...item,
+            selectedCount: item.selectedCount += 1
+          }
         } else {
-          return null
+          return item
         }
       });
 
       return {
         ...state,
-        totalPrice: getTotalSum(state.items),
+        items: itemsClone,
+        totalPrice: getTotalSum(itemsClone),
       };
     }
 
     case 'MINUS_CART_ITEM': {
-      state.items.map(item => {
+      const itemsClone = state.items.map(item => {
         if (item.id === action.payload && item.selectedCount > 1) {
-          return item.selectedCount -= 1;
+          return {
+            ...item,
+            selectedCount: item.selectedCount -= 1
+          }
         } else {
-          return null
+          return item
         }
       });
 
       return {
         ...state,
-        totalPrice: getTotalSum(state.items),
+        items: itemsClone,
+        totalPrice: getTotalSum(itemsClone),
       };
     }
 
     case 'SET_SELECTED_COUNT': {
-      const { val, id } = action.payload
-      state.items.map(item => {
+      const { val, id } = action.payload;
+      const itemsClone = state.items.map(item => {
         if (item.id === id && val > 0 && val <= 50) {
-          return item.selectedCount = val;
+          return {
+            ...item,
+            selectedCount: +val
+          }
         } else if (item.id === id && val === '') {
-          return item.selectedCount = 1
+          return {
+            ...item,
+            selectedCount: 1
+          }
         } else {
-          return null
+          return item
         }
       });
 
       return {
-        ...state
+        ...state,
+        items: itemsClone
       }
     }
 

@@ -62,6 +62,9 @@ const Shipping = ({ handleSubmit, submitting, invalid }) => {
         for (let cart of items) {
             cartInfo.push(` TITLE: ${cart.title}, COUNT: ${cart.selectedCount};\n`)
         }
+        if (!value.options) {
+            value.options = 0;
+        }
         alert(`Dear ${value.name}, your order consists of:\n ${cartInfo.join(' ')}
         Cart price: ${totalPrice} 
         Delivery price: ${value.options}
